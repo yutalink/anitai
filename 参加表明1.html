@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>イベント参加表明</title>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    #form-area {
+      margin-bottom: 20px;
+    }
+
+    #card {
+      width: 500px;
+      min-height: 350px;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    #card h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #download-btn {
+      margin-top: 15px;
+    }
+
+    input, select, button, textarea {
+      padding: 8px;
+      font-size: 16px;
+      margin: 5px 10px 10px 0;
+      width: 300px;
+      max-width: 100%;
+    }
+
+    textarea {
+      height: 60px;
+    }
+
+    .form-label {
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="form-area">
+    <label class="form-label">名前</label>
+    <input type="text" id="name" placeholder="名前を入力">
+
+    <label class="form-label">参加状況</label>
+    <select id="status">
+      <option value="参加">参加</option>
+      <option value="不参加">不参加</option>
+    </select>
+
+    <label class="form-label">参加目的</label>
+    <select id="purpose">
+      <option value="一般">一般</option>
+      <option value="コスプレ">コスプレ</option>
+      <option value="ヲタ芸">ヲタ芸</option>
+    </select>
+
+    <label class="form-label">リクエスト曲</label>
+    <textarea id="song" placeholder="曲名・アーティスト名など自由に入力"></textarea>
+
+    <div style="margin-top:10px;">
+      <button onclick="updateCard()">プレビュー更新</button>
+      <button onclick="downloadImage()">画像をダウンロード</button>
+    </div>
+  </div>
+
+  <div id="card">
+    <h2>🎉 イベント参加表明 🎉</h2>
+    <p id="card-name">名前：---</p>
+    <p id="card-status">参加状況：---</p>
+    <p id="card-purpose">参加目的：---</p>
+    <p id="card-song">リクエスト曲：---</p>
+  </div>
+
+  <script>
+    function updateCard() {
+      const name = document.getElementById('name').value || '---';
+      const status = document.getElementById('status').value;
+      const purpose = document.getElementById('purpose').value;
+      const song = document.getElementById('song').value || '---';
+
+      document.getElementById('card-name').textContent = `名前：${name}`;
+      document.getElementById('card-status').textContent = `参加状況：${status}`;
+      document.getElementById('card-purpose').textContent = `参加目的：${purpose}`;
+      document.getElementById('card-song').textContent = `リクエスト曲：${song}`;
+    }
+
+    function downloadImage() {
+      html2canvas(document.getElementById("card")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "参加表明.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+
+</body>
+</html>
